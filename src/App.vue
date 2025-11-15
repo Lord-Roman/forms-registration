@@ -1,26 +1,46 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { Field, Form, ErrorMessage } from 'vee-validate'
+import * as yup from 'yup'
+
+const nameRules = yup.string().required()
+</script>
 
 <template>
   <body>
     <div class="container">
       <h1 class="title">Регистрация</h1>
-      <form class="registration-form">
+      <Form @submit="submit" class="registration-form">
         <div class="form-group">
           <label class="form-label" for="firstname">Имя *</label>
-          <input class="form-control" name="firstname" type="text" id="firstname" required />
+          <Field
+            class="form-control"
+            name="firstname"
+            type="text"
+            id="firstname"
+            :rules="nameRules"
+          />
+          <ErrorMessage name="firstname" />
         </div>
         <div class="form-group">
           <label class="form-label" for="lastname">Фамилия *</label>
-          <input class="form-control" name="lastname" type="text" id="lastname" required />
+          <Field
+            class="form-control"
+            name="lastname"
+            type="text"
+            id="lastname"
+            :rules="nameRules"
+          />
+          <ErrorMessage name="lastname" />
         </div>
         <div class="form-group">
           <label class="form-label" for="country">Страна/Регион *</label>
-          <input class="form-control" name="country" type="text" id="country" required />
+          <Field class="form-control" name="country" type="text" id="country" :rules="isRequired" />
+          <ErrorMessage name="country" />
         </div>
         <div class="form-group">
           <label class="form-label" for="city">Город *</label>
           <div class="custom-select">
-            <select class="form-control" id="city" name="city" required>
+            <select class="form-control" id="city" name="city" :rules="isRequired">
               <option value="" disabled selected>Выберите город</option>
               <option value="msc">Москва</option>
               <option value="spb">Санкт-Петербург</option>
@@ -32,15 +52,21 @@
         </div>
         <div class="form-group">
           <label class="form-label" for="phone">Телефон *</label>
-          <input class="form-control" type="tel" name="phone" id="phone" required />
+          <Field class="form-control" type="tel" name="phone" id="phone" :rules="isRequired" />
         </div>
         <div class="form-group">
           <label class="form-label" for="email">Email *</label>
-          <input class="form-control" type="email" name="email" id="email" required />
+          <Field class="form-control" type="email" name="email" id="email" :rules="isRequired" />
         </div>
         <div class="form-group form-group--password">
           <label class="form-label" for="password">Пароль *</label>
-          <input class="form-control" type="password" name="password" id="password" required />
+          <Field
+            class="form-control"
+            type="password"
+            name="password"
+            id="password"
+            :rules="isRequired"
+          />
           <button class="btn-icon btn-icon--password" type="button">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
               <path
@@ -52,12 +78,12 @@
         </div>
         <div class="form-group form-group--password">
           <label class="form-label" for="confirm-password">Подтвердите пароль *</label>
-          <input
+          <Field
             class="form-control"
             type="password"
             name="confirm-password"
             id="confirm-password"
-            required
+            :rules="isRequired"
           />
           <button class="btn-icon btn-icon--password" type="button">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
@@ -74,13 +100,13 @@
         </div>
         <div class="form-group form-group--full-width">
           <label class="form-label form-label--checkbox" for="terms">
-            <input type="checkbox" id="terms" name="terms" required />
+            <Field type="checkbox" id="terms" name="terms" :rules="isRequired" />
             Я согласен c условиями пользования и политикой конфиденциальности
           </label>
         </div>
         <button class="btn" type="submit">Зарегистрироваться</button>
         <button class="btn" type="reset">Очистить форму</button>
-      </form>
+      </Form>
       <div class="message message--success">Регистрация прошла успешно!</div>
     </div>
   </body>
